@@ -1,0 +1,163 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-warning text-center">
+                                    <i class="ti-server"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>순이익</p>
+                                    <h4><%=attribute.deliverNow-attribute.purchaseNow%></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-wallet"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>납품 현황</p>
+                                    <h4><%=attribute.deliverMax-attribute.deliverNow%></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                              <i class="ti-arrow-right"></i><%= Math.floor((attribute.deliverNow/attribute.deliverMax)*100)%>%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-danger text-center">
+                                    <i class="ti-pulse"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>매입 현황</p>
+                                    <h4><%=attribute.purchaseMax-attribute.purchaseNow%></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                              <i class="ti-arrow-right"></i><%= Math.floor((attribute.purchaseNow/attribute.purchaseMax)*100)%>%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-info text-center">
+                                    <i class="ti-twitter-alt"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>반품 현황</p>
+                                    <h4><%=attribute.returnMax-attribute.returnNow%></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                              <i class="ti-arrow-right"></i><%= Math.floor((attribute.returnNow/attribute.returnMax)*100)%>%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card ">
+                  <div class="header">
+                      <h4 class="title"><%=date%></h4>
+                  </div>
+                  <div class="content">
+                      <div id="chartActivity" class="ct-chart"></div>
+
+                      <div class="footer">
+                          <div class="chart-legend">
+                              <i class="fa fa-circle text-info"></i> 납 품
+                              <i class="fa fa-circle text-warning"></i> 순이익
+                              <i class="fa fa-circle text-danger"></i> 반 품
+                          </div>
+                          <hr>
+                      </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="header">
+                      <h4 class="title">남은재고 목록</h4>
+                  </div>
+                  <div class="content table-responsive table-full-width">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>제품코드</th>
+                          <th>남은 갯수</th>
+                          <th>매입 예정</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%for(var i=0;i<remainProduct.length;i++){
+                          %>
+                            <tr>
+                              <td></td>
+                              <td><%=remainProduct[i].productCode%></td>
+                              <td><%=remainProduct[i].remainProduct%></td>
+                              <td><%=remainProduct[i].waitingProduct%></td>
+                            </tr>
+                          <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+		$(document).ready(function(){
+			var a =[];a.push(<%=attribute.purchase_data%>);
+			var b =[];b.push(<%=attribute.deliver_data%>);
+			var c =[];c.push(<%=attribute.return_data%>);
+			demo.initChartist(a, b,c)
+		});
+</script>

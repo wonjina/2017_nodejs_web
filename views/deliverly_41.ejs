@@ -1,0 +1,51 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">납품</h4>
+                    </div>
+                    <div class="content">
+                        <form method="post">
+                            <div class="row">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th></th>
+                                    <td>제조사</td>
+                                    <th>제품코드</th>
+                                    <th>원가</th>
+                                    <th>납품가</th>
+                                    <th>남은 갯수</th>
+                                    <th>갯수</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <%for(var i=0;i<productlist.length;i++){
+                                    %>
+                                      <tr>
+                                        <td></td>
+                                        <td><%=productlist[i].manufacturerName%></td>
+                                        <td><input type="hidden" name="<%=i%>" value="<%=productlist[i].productCode%>"></input><%=productlist[i].productCode%></td>
+                                        <td><%=productlist[i].costPrice%></td>
+                                        <td><%=(productlist[i].costPrice*costRate[0].costRate)%></td>
+                                        <td><%=centerproductAmount[i].reciveAmount-reciveproductAmount[i].allAmount%></td>
+                                        <td><input type="number" name="<%=productlist[i].productCode%>" class="form-control border-input" min="0" max="<%=centerproductAmount[i].reciveAmount-reciveproductAmount[i].allAmount%>"></td>
+                                      </tr>
+                                    <%}%>
+                                </tbody>
+                              </table>
+                            </div>
+                            <input type="hidden" value="<%=productlist.length%>" name="length">
+                            <input type="hidden" value="<%=localPosition%>" name="localPosition">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info btn-fill btn-wd" formaction="/deliver/deliverly">OK</button>
+                                <button type="submit" class="btn btn-info btn-fill btn-wd" formaction="/user">Cancle</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

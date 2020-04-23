@@ -1,0 +1,151 @@
+<div class="content">
+			<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+									<div class="header">
+											<h4 class="title">반품 요청</h4>
+									</div>
+									<div class="content table-responsive table-full-width">
+										<table class="table">
+											<thead>
+												<tr>
+													<th></th>
+													<th>localPosition</th>
+													<th>returnDate</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<%for(var i=0;i<results.length;i++){
+														if(results[i].returnState=='미수령' && results[i].localPosition!=user){
+													%>
+															<tr>
+																<td></td>
+																<td><a onclick="modalView('<%=results[i].returnDate%>', '<%=results[i].localPosition%>')" name="<%=i%>"><%=results[i].localPosition%></a></td>
+																<td><a onclick="modalView('<%=results[i].returnDate%>', '<%=results[i].localPosition%>')" name="<%=i%>"><%=results[i].returnDate%></a></td>
+																<td><a href="/return/succese?date=<%=results[i].returnDate%>&local=<%=results[i].localPosition%>">확인</a></td>
+															</tr>
+													<%}}%>
+											</tbody>
+										</table>
+									</div>
+							</div>
+							<div class="card">
+									<div class="header">
+											<h4 class="title">나의 반품 신청</h4>
+									</div>
+									<div class="content table-responsive table-full-width">
+										<table class="table">
+											<thead>
+												<tr>
+													<th></th>
+													<th>localPosition</th>
+													<th>returnDate</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<%for(var i=0;i<results.length;i++){
+														if(results[i].localPosition==user){
+													%>
+															<tr>
+																<td></td>
+																<td><a onclick="modalView('<%=results[i].returnDate%>', '<%=results[i].localPosition%>')" name="<%=i%>"><%=results[i].localPosition%></a></td>
+																<td><a onclick="modalView('<%=results[i].returnDate%>', '<%=results[i].localPosition%>')" name="<%=i%>"><%=results[i].returnDate%></a></td>
+																<td><%=results[i].returnState%></td>
+															</tr>
+													<%}}%>
+											</tbody>
+										</table>
+									</div>
+							</div>
+							<div class="card">
+									<div class="header">
+											<h4 class="title">반품 완료</h4>
+									</div>
+									<div class="content table-responsive table-full-width">
+										<table class="table">
+											<thead>
+												<tr>
+													<th></th>
+													<th>localPosition</th>
+													<th>returnDate</th>
+												</tr>
+											</thead>
+											<tbody>
+												<%for(var i=0;i<results.length;i++){
+													if(results[i].returnState=='수령' && results[i].localPosition!=user){
+													%>
+															<tr>
+																<td></td>
+																<td><a name="<%=i%>" onclick="modalView('<%=results[i].returnDate%>', '<%=results[i].localPosition%>')"><%=results[i].localPosition%></a></td>
+																<td><a name="<%=i%>" onclick="modalView('<%=results[i].returnDate%>', '<%=results[i].localPosition%>')"><%=results[i].returnDate%></a></td>
+															</tr>
+													<%}}%>
+											</tbody>
+										</table>
+									</div>
+							</div>
+						</div>
+				</div>
+		</div>
+</div>
+<%# modal list view %>
+<div id="id02" class="w3-modal">
+  <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+    <div class="w3-center"><br><h4>제품리스트</h4>
+		</div>
+		<div class="w3-container">
+	    <div class="w3-section">
+				<span id="title"></span>
+				<table class="table" width="100%" cellspacing="0" cellpadding="0" class="tbl">
+			    <thead>
+				    <tr>
+				      <th><h3>품목</h3></th>
+				      <th><h3>수량</h3></th>
+				    </tr>
+					</thead>
+			    <tbody id="myList">
+					</tbody>
+			  </table>
+	      <button onclick="modalClean()" type="button" class="w3-button w3-red">Cancel</button>
+	    </div>
+		</div>
+  </div>
+</div>
+
+<script>
+function modalView( returnDate, localPosition){
+	$.ajax({url: "/return/detailsProduct",type:"POST",data:{returnDate:returnDate,localPosition:localPosition}, success: function(result){
+
+		var body = document.getElementById('myList');
+		for(var i=0;i<result.length;i++){
+			var tr = document.createElement("tr");
+
+			var td = document.createElement("td");
+			var textnode = document.createTextNode(result[i].productCode);
+			td.appendChild(textnode);
+			tr.appendChild(td);
+			var td2 = document.createElement("td");
+			var textnode2 = document.createTextNode(result[i].productAmount);
+			td2.appendChild(textnode2);
+			tr.appendChild(td2);
+
+			body.appendChild(tr);
+		}
+		var title = document.getElementById('title');
+		textnode = document.createTextNode(returnDate+' , '+ localPosition);
+		title.appendChild(textnode);
+		var modal = document.getElementById('id02');
+		modal.style.display='block';
+	}});
+}
+
+function modalClean(){
+	var modal = document.getElementById('id02');
+	$("#myList").empty();
+	$("#title").empty();
+  modal.style.display='none';
+}
+</script>

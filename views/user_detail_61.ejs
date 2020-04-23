@@ -1,0 +1,100 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="card">
+                    <div class="header">
+                      <div class="author">
+                        <img class="avatar border-white" src="../assets/img/faces/face-1.jpg" alt="..."/>
+                        <h4 class="title">Chet Faker<br />
+                        </h4>
+                      </div>
+                    </div>
+                    <div class="content">
+                        <form method="post" name="formCustom">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>ID</label>
+                                        <input type="text" class="form-control border-input" name="id" value="<%=user.id%>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" class="form-control border-input" name="name" value="<%=user.name%>">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">point</label>
+                                        <input type="email" class="form-control border-input" name="point" placeholder="<%=user.point%>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>password</label>
+                                        <input type="text" class="form-control border-input" id="pwd">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>repassword</label>
+                                        <input type="text" class="form-control border-input" id="pwdRepeat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>location</label>
+                                        <input type="text" class="form-control border-input" name="localPosition" value="<%=user.localPosition%>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Join date</label>
+                                        <input type="text" class="form-control border-input" disabled value="<%=user.joinDate%>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                              <%if(user.approvalState){%>
+                                <button type="button" onclick="javascript:btnRegister()" class="btn btn-info btn-fill btn-wd">Update</button>
+                                <button type="submit" formaction="/user" class="btn btn-fill btn-wd">cancel</button>
+                                <%if(user.grade!=0){%><button type="submit" formaction="/user/delete" class="btn btn-warning btn-fill btn-wd">delete</button><%}%>
+                              <%}else{%>
+                                <button type="submit" formaction="/user/update_approve" class="btn btn-info btn-fill btn-wd">approve</button>
+                              <%}%>
+                            </div>
+                            <div class="clearfix"></div>
+                            <input type="hidden" id="key" name="key" value="">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  function btnRegister(){
+    if(document.formCustom.pwd.value!=document.formCustom.pwdRepeat.value){
+      alert("비밀번호가 다릅니다.");
+      document.formCustom.pwd.focus();
+    }
+    else{
+      if(document.formCustom.pwd.value!=''){
+        const salt = 'O0iC9xqMBUVl3BdO50+JWkpvVcA5g2VNaYTR5Hc45g+/iXy4PzcCI7GJN5h5r3aLxIhgMN8HSh0DhyqwAp8lLw==';
+        var key = CryptoJS.PBKDF2($("#pwd").val(), salt, { keySize: 8, iterations: 1000 });
+        document.getElementById('key').value=key;
+      }
+      document.formCustom.action="/user/update_user";
+      document.formCustom.submit();
+
+    }
+  }
+
+</script>

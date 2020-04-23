@@ -1,0 +1,41 @@
+<div class="sidebar" data-background-color="white" data-active-color="danger">
+  <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="#" class="simple-text">
+                JYBS
+            </a>
+        </div>
+        <ul class="nav">
+            <li class="ctoggle <%if(path=='todayChart'){ %>active<%}%>">
+                <a href="/todayChart">
+                    <i class="ti-panel"></i>
+                    <p>현황 조회</p>
+                </a>
+            </li>
+            <li class="ctoggle <%if(path=='manufacturer'){ %>active<%}%>">
+                <a href="/manufacturer">
+                    <i class="ti-user"></i>
+                    <p>매입</p>
+                </a>
+            </li>
+            <li class="ctoggle <%if(path=='return'){ %>active<%}%>">
+                <a href="/return">
+                    <i class="ti-map"></i>
+                    <p>반품</p>
+                </a>
+            </li>
+            <li class="ctoggle <%if(path=='deliver'){ %>active<%}%>">
+                <a href="/deliver">
+                    <i class="ti-view-list-alt"></i>
+                    <p>납품 조회</p>
+                </a>
+            </li>
+            <li class="ctoggle <%if(path=='user'){ %>active<%}%>">
+                <a href="/user">
+                    <i class="ti-view-list-alt"></i>
+                    <p>User</p>
+                </a>
+            </li>
+        </ul>
+  </div>
+</div>

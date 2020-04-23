@@ -1,0 +1,50 @@
+<div class="content">
+	<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+          <div class="card">
+            <div class="header">
+                <h4 class="title">매입 대기 (<%=reciveDate , factoryName%>)</h4>
+            </div>
+            <div class="content table-responsive table-full-width">
+              <form id="form">
+								<input type="hidden" name="reciveDate" value="<%=reciveDate%>">
+								<input type="hidden" name="factoryName" value="<%=factoryName%>">
+								<input type="hidden" name="index" value="<%=results.length%>">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>productCode</th>
+                      <th>productAmount</th>
+                      <th>MAX</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <%for(var i=0;i<results.length;i++){
+                    %>
+                        <tr>
+                          <td><input type="hidden" name="max<%=i%>" value="<%=results[i].productAmount%>"></td>
+                          <td><input type="hidden" name="productCode<%=i%>" value="<%=results[i].productCode%>"><%=results[i].productCode%></td>
+                          <td><input type="number" min="0" max="<%=results[i].productAmount%>" name="<%=i%>" value="0"></td>
+                          <td><%=results[i].productAmount%></td>
+                        </tr>
+                    <%}%>
+                  </tbody>
+                </table>
+                <div class="text-center">
+                  <button type="submit" formmethod="post" formaction="/manufacturer/return" class="btn btn-info btn-fill btn-wd">반송</button>
+                  <button type="button" onclick="goBack()" class="btn btn-fill btn-wd">취소</button>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function goBack(){
+	window.history.back();
+}
+</script>
